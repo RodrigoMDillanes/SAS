@@ -1,0 +1,58 @@
+
+9382 ------>  0009382
+23   ------>  0000023
+
+Some times you want to create a variable with the same length, like an ID, but ussually the raw data doesn't come like this.
+
+Example:
+
+/*---------- SAS ----------*/
+/*This code create a data set with one variable called ID with 6 rows*/
+data scores;
+   input ID ;
+   datalines;
+1998374
+37
+837
+6483
+9
+73766
+;
+/*---------- SAS ----------*/
+
+You have to make the neccesary modification to your data to obtain what you want.
+One way to solve this problem and obtain that all the values of the variables ID has the same length, is to put leading zeros
+to obtain something like this
+
+Example:
+
+ID
+1998374
+0000037
+0000837
+0006483
+0000009
+0073766
+
+In SAS you can apply  a Z format 
+
+/*---------- SAS ----------*/
+data scores;
+set scores;
+drop ID;
+ID_format=put(ID,Z10.); /*Zw.d , w is the desire length of the field
+run;
+/*---------- SAS ----------*/
+
+The previous code creates the following table:
+
+ID_format
+0001998374
+0000000037
+0000000837
+0000006483
+0000000009
+0000073766
+
+Now, we have all de fields of our variable with the same length.
+
